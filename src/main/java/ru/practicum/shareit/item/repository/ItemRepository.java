@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-public interface ItemStorage {
+public interface ItemRepository {
     Item create(Item item);
 
     Item update(Item item, int id);

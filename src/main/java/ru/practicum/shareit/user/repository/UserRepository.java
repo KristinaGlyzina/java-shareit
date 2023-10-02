@@ -5,7 +5,6 @@ import ru.practicum.shareit.user.model.User;
 import java.util.Collection;
 import java.util.Set;
 
-
 public interface UserRepository {
 
     User getUserById(int id);

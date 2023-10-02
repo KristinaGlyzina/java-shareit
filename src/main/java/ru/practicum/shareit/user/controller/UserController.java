@@ -33,8 +33,8 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserDto> getUserById(@PathVariable int userId) {
-    UserDto user = userService.getUserById(userId);
-    return ResponseEntity.ok(user);
+        UserDto user = userService.getUserById(userId);
+        return ResponseEntity.ok(user);
     }
 
     @DeleteMapping("/{userId}")
@@ -44,6 +44,6 @@ public class UserController {
 
     @GetMapping
     public Collection<UserDto> getAllUsers() {
-       return userService.getAllUsers();
+        return userService.getAllUsers();
     }
 }

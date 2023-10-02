@@ -6,7 +6,7 @@ import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.item.repository.ItemStorage;
+import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.mapper.UserMapper;
 import ru.practicum.shareit.user.repository.UserRepository;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 public class ItemServiceImpl implements ItemService {
     @Autowired
-    private ItemStorage itemStorage;
+    private ItemRepository itemRepository;
     @Autowired
     private UserService userService;
     @Autowired
@@ -31,7 +31,6 @@ public class ItemServiceImpl implements ItemService {
 
     public ItemServiceImpl() {
     }
-
 
     @Override
     public ItemDto create(int userId, ItemDto itemDto) {
@@ -47,13 +46,13 @@ public class ItemServiceImpl implements ItemService {
         UserDto userDto = userService.getUserById(userId);
         Item item = ItemMapper.toItem(itemDto);
         item.setOwner(UserMapper.toUser(userDto));
-        return ItemMapper.toItemDto(itemStorage.create(item));
+        return ItemMapper.toItemDto(itemRepository.create(item));
     }
 
 
     @Override
     public ItemDto update(int userId, ItemDto itemDto, int itemId) {
-        Item existingItem = itemStorage.getItemById(itemId);
+        Item existingItem = itemRepository.getItemById(itemId);
         if (existingItem == null) {
             throw new NotFoundException("Item not found with ID: " + itemId);
         }
@@ -74,7 +73,7 @@ public class ItemServiceImpl implements ItemService {
             existingItem.setAvailable(itemDto.getAvailable());
         }
 
-        Item updatedItem = itemStorage.update(existingItem, itemId);
+        Item updatedItem = itemRepository.update(existingItem, itemId);
 
         return ItemMapper.toItemDto(updatedItem);
     }
@@ -82,7 +81,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDto getItemById(int id) {
-        Item item = itemStorage.getItemById(id);
+        Item item = itemRepository.getItemById(id);
         if (item == null) {
             throw new NotFoundException("Item not found with ID: " + id);
         }
@@ -95,7 +94,7 @@ public class ItemServiceImpl implements ItemService {
         if (userDto == null) {
             throw new NotFoundException("User not found with ID: " + userId);
         }
-        Set<Item> userItems = itemStorage.getAllItemsByUserId(userId);
+        Set<Item> userItems = itemRepository.getAllItemsByUserId(userId);
 
         return userItems.stream()
                 .map(ItemMapper::toItemDto)
@@ -107,6 +106,6 @@ public class ItemServiceImpl implements ItemService {
         if (query.isEmpty()) {
             return new ArrayList<>();
         }
-        return new ArrayList<>(itemStorage.searchItem(query));
+        return new ArrayList<>(itemRepository.searchItem(query));
     }
 }

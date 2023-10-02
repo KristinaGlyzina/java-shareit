@@ -6,8 +6,9 @@ import ru.practicum.shareit.item.model.Item;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
 @Repository
-public class ItemStorageImpl implements ItemStorage {
+public class ItemRepositoryImpl implements ItemRepository {
     private ItemMapper itemMapper;
     private final Map<Integer, Item> itemsMap = new HashMap<>();
     private int id = 1;
@@ -22,13 +23,13 @@ public class ItemStorageImpl implements ItemStorage {
 
     @Override
     public Item update(Item item, int id) {
-            itemsMap.put(id, item);
-            return item;
+        itemsMap.put(id, item);
+        return item;
     }
 
     @Override
     public Item getItemById(int id) {
-            return itemsMap.get(id);
+        return itemsMap.get(id);
     }
 
     @Override
