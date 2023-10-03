@@ -1,7 +1,6 @@
 package ru.practicum.shareit.user.service;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.user.dto.UserDto;
@@ -13,13 +12,11 @@ import javax.validation.ValidationException;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-@Slf4j
+@AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final UserRepository userRepository;
 
     @Override
     public UserDto create(UserDto userDto) {
@@ -76,7 +73,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(int id) {
-        log.info("User with id {} deleted.", id);
         userRepository.delete(id);
     }
 }
