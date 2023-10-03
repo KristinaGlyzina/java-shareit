@@ -24,7 +24,7 @@ public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final UserService userService;
     private final UserRepository userRepository;
-    private final ItemMapper itemMapper;
+    private ItemMapper itemMapper;
 
     @Override
     public ItemDto create(int userId, ItemDto itemDto) {
